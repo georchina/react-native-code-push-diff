@@ -10,8 +10,7 @@ import com.facebook.react.ReactPackage;
 import com.facebook.react.bridge.JavaScriptModule;
 import com.facebook.react.bridge.NativeModule;
 import com.facebook.react.bridge.ReactApplicationContext;
-import com.facebook.react.devsupport.DevSettingsActivity;
-import com.facebook.react.devsupport.interfaces.DevSupportManager;
+import com.facebook.react.modules.debug.interfaces.DeveloperSettings;
 import com.facebook.react.uimanager.ViewManager;
 
 import org.json.JSONException;
@@ -133,11 +132,9 @@ public class CodePush implements ReactPackage {
                 for (Method m : methods) {
                     if (m.getName().equals("isReloadOnJSChangeEnabled")) {
                         try {
-                            isLiveReloadEnabled = (boolean) m.invoke(devInternalSettings);
-                        } catch (IllegalAccessException e) {
-                            CodePushUtils.log("Error getting isReloadOnJSChangeEnabled property", e);
-                        } catch (InvocationTargetException e) {
-                            CodePushUtils.log("Error getting isReloadOnJSChangeEnabled property", e);
+                        isLiveReloadEnabled = (boolean) m.invoke(devInternalSettings);
+                        } catch (Exception e) {
+                            // do nothing, just use default value
                         }
                         break;
                     }
